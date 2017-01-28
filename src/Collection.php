@@ -21,7 +21,7 @@ class Collection implements ArrayAccess
 	{
 		return array_map(function($value) {
 			if (is_array($value)) {
-				$value = new self($value);
+				$value = new static($value);
 			}
 
 			return $value;

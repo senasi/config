@@ -4,10 +4,16 @@ namespace Senasi\Config;
 
 use ArrayAccess;
 use Nette\Neon\Neon;
+use Senasi\Config\Handler\HandlerInterface;
 
 
 class Config extends Collection implements ArrayAccess
 {
+	/**
+	 * @var [HandlerInterface, string][]
+	 */
+	private $handlers = [];
+
 	/**
 	 * Create new config object, optionally set defaults
 	 *
@@ -16,6 +22,15 @@ class Config extends Collection implements ArrayAccess
 	public function __construct(array $defaults = [])
 	{
 		return parent::__construct($defaults);
+	}
+
+	/**
+	 * @param HandlerInterface $handler
+	 * @param array|null $applyKeys - null to apply to all keys
+	 */
+	public function pushHandler(HandlerInterface $handler, array $applyKeys = null)
+	{
+		$this->handlers[] = [$handler, $applyKeys];
 	}
 
 	/**
@@ -44,6 +59,19 @@ class Config extends Collection implements ArrayAccess
 		}
 
 		return false;
+	}
+
+	protected function init(array $values)
+	{
+		array_walk($values, function(&$value, $key) {
+			foreach ($this->handlers as [$handler, $applyKeys]) {
+				if (!is_array($value) && in_array($key, $applyKeys)) {
+					$value = $handler->handle($value);
+				}
+			}
+		});
+
+		return parent::init($values);
 	}
 
 }
