@@ -1,0 +1,12 @@
+{
+    "name": "senasi/config",
+    "description": "Class for loading and accessing settings",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vlado Senasi",
+            "email": "vlado@senasi.sk"
+        }
+    ],
+    "require": {}
+}
