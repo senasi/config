@@ -1,12 +1,14 @@
 {
-    "name": "senasi/config",
-    "description": "Class for loading and accessing settings",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Vlado Senasi",
-            "email": "vlado@senasi.sk"
-        }
-    ],
-    "require": {}
+	"name": "senasi/config",
+	"description": "Class for loading and accessing settings",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Vlado Senasi",
+			"homepage": "https://github.com/senasi"
+		}
+	],
+	"require": {
+		"nette/neon": "^2.3"
+	}
 }
