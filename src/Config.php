@@ -3,11 +3,13 @@
 namespace Senasi\Config;
 
 use ArrayAccess;
+use Countable;
+use IteratorAggregate;
 use Nette\Neon\Neon;
 use Senasi\Config\Handler\HandlerInterface;
 
 
-class Config extends Collection implements ArrayAccess
+class Config extends Collection implements ArrayAccess, Countable, IteratorAggregate
 {
 	/**
 	 * @var [HandlerInterface, string][]

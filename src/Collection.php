@@ -3,9 +3,13 @@
 namespace Senasi\Config;
 
 use ArrayAccess;
+use ArrayIterator;
+use Countable;
+use IteratorAggregate;
+use Traversable;
 
 
-class Collection implements ArrayAccess
+class Collection implements ArrayAccess, Countable, IteratorAggregate
 {
 	/**
 	 * @var array
@@ -68,6 +72,34 @@ class Collection implements ArrayAccess
 	public function __unset($key)
 	{
 		throw new ReadOnlyException();
+	}
+
+	public function count()
+	{
+		return count($this->values);
+	}
+
+	public function getIterator()
+	{
+		return new ArrayIterator($this->values);
+	}
+
+	public static function toArray($value)
+	{
+		if (is_array($value)) {
+			return $value;
+		}
+
+		if ($value instanceof Traversable) {
+			$a = [];
+			foreach ($value as $k => $v) {
+				$a[$k] = $v;
+			}
+
+			return $a;
+		}
+
+		return [];
 	}
 
 }
