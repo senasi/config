@@ -9,7 +9,7 @@
 		}
 	],
 	"require": {
-		"php": ">=7.1",
+		"php": ">=7.0",
 		"nette/neon": "^2.3"
 	},
 	"autoload": {

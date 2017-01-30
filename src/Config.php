@@ -50,7 +50,7 @@ class Config extends Collection implements ArrayAccess, Countable, IteratorAggre
 				return false;
 			}
 
-			throw new FileNotFoundException();
+			throw new FileNotFoundException($fileName);
 		}
 
 		$data = Neon::decode(file_get_contents($fileName));
@@ -66,7 +66,8 @@ class Config extends Collection implements ArrayAccess, Countable, IteratorAggre
 	protected function init(array $values)
 	{
 		array_walk($values, function(&$value, $key) {
-			foreach ($this->handlers as [$handler, $applyKeys]) {
+			// foreach ($this->handlers as [$handler, $applyKeys]) { // TODO: this is so php 7.1
+			foreach ($this->handlers as list($handler, $applyKeys)) {
 				if (!is_array($value) && in_array($key, $applyKeys)) {
 					$value = $handler->handle($value);
 				}
